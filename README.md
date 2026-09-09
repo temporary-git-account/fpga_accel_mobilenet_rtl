@@ -1,4 +1,4 @@
-# MobileNet RTL Accelerator
+# MobileNet Accelerator RTL
 
 **A complete guide for a convolution accelerator on the Zynq-7010.**
 This README contains the architecture, integer
