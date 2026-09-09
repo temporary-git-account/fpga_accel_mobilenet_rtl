@@ -5,16 +5,10 @@ This README contains the architecture, integer
 math, diagrams, worked examples, scheduling, memory interface, register map,
 verification, timing evidence and complete operator inventory.
 
-Read it directly on GitHub, or in a Markdown viewer with the accompanying
-`docs/images` directory. Every diagram is a local, self-contained SVG image.
-The examples use equations and tables and require no JavaScript. Practical
-simulation and implementation commands are in [GUIDE.md](GUIDE.md).
-
 ## Package layout
 
 ```text
 README.md                 complete illustrated architecture and study guide
-GUIDE.md                  simulation/build steps and reading plan
 DESIGN.md                 pointer to the consolidated architecture guide
 rtl/                      six SystemVerilog modules
 tb/                       SV arithmetic and C++ memory/layer/top testbenches
