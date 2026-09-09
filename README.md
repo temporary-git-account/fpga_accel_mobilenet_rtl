@@ -1,7 +1,7 @@
 # MobileNet RTL Accelerator
 
-**A complete RTL study guide for a handwritten SystemVerilog convolution
-accelerator on the Zynq-7010.** This README contains the architecture, integer
+**A complete guide for a convolution accelerator on the Zynq-7010.**
+This README contains the architecture, integer
 math, diagrams, worked examples, scheduling, memory interface, register map,
 verification, timing evidence and complete operator inventory.
 
