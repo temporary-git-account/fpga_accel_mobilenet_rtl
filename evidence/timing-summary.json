@@ -1,0 +1,72 @@
+{
+  "passed": true,
+  "clocks": {
+    "clk_fpga_0": {
+      "period_ns": 10.0,
+      "frequency_mhz": 100.0
+    },
+    "clk_fpga_1": {
+      "period_ns": 6.0,
+      "frequency_mhz": 166.667
+    }
+  },
+  "core_rate_hz_limit": 166666666,
+  "metrics": {
+    "wns_ns": 0.172,
+    "tns_ns": 0.0,
+    "setup_failures": 0.0,
+    "setup_endpoints": 21446.0,
+    "whs_ns": 0.028,
+    "ths_ns": 0.0,
+    "hold_failures": 0.0,
+    "hold_endpoints": 21290.0,
+    "wpws_ns": 1.75,
+    "tpws_ns": 0.0,
+    "pulse_failures": 0.0,
+    "pulse_endpoints": 6833.0
+  },
+  "constraint_checks": {
+    "no_clock": 0,
+    "constant_clock": 0,
+    "pulse_width_clock": 0,
+    "unconstrained_internal_endpoints": 0,
+    "no_input_delay": 0,
+    "no_output_delay": 0,
+    "multiple_clock": 0,
+    "generated_clocks": 0,
+    "loops": 0,
+    "partial_input_delay": 0,
+    "partial_output_delay": 0,
+    "latch_loops": 0
+  },
+  "drc": [
+    [
+      "DPIP-1",
+      "Warning",
+      "6"
+    ],
+    [
+      "DPOP-2",
+      "Warning",
+      "9"
+    ],
+    [
+      "RTSTAT-10",
+      "Warning",
+      "1"
+    ]
+  ],
+  "cdc": [
+    [
+      "CDC-3",
+      "Info",
+      "14"
+    ],
+    [
+      "CDC-15",
+      "Warning",
+      "269"
+    ]
+  ],
+  "cdc_review": "SmartConnect clock-enable data crossings and vendor reset synchronizers; no custom cross-domain datapath"
+}

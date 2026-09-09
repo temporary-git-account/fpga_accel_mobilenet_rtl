@@ -1,0 +1,21 @@
+AXI_MEMORY_PASS random/cache/strobes/4KiB/errors/RLAST/timeout/drain/reset AR=2695 AW=1001
+SHAPE_FIXTURES 10
+CSR_PASS byte strobes/invalid offsets/commands/reset identity
+op_00 job=1 cycles=241 reads=5 writes=1 status=0
+op_01 job=2 cycles=1996 reads=75 writes=75 status=0
+op_02 job=3 cycles=10811 reads=588 writes=312 status=0
+op_03 job=4 cycles=11193 reads=690 writes=108 status=0
+op_04 job=5 cycles=6430 reads=270 writes=75 status=0
+op_05 job=6 cycles=9069 reads=410 writes=60 status=0
+op_06 job=7 cycles=21094 reads=468 writes=135 status=0
+op_07 job=8 cycles=5890 reads=247 writes=195 status=0
+op_08 job=9 cycles=17684 reads=527 writes=119 status=0
+op_09 job=10 cycles=171288 reads=11291 writes=9 status=0
+TOP_SIM_PASS mode=all layers=10 total_cycles=258439
+op_33 job=1 cycles=66770 reads=3078 writes=2 status=0
+ job=2 cycles=1063 reads=113 writes=0 status=2
+ job=3 cycles=90 reads=9 writes=0 status=3
+ job=4 cycles=66774 reads=3078 writes=2 status=0
+ job=5 cycles=1 reads=0 writes=0 status=1
+TOP_SIM_PASS mode=op_33 layers=1 total_cycles=136163
+RTL_CHECK_PASS mode=quick

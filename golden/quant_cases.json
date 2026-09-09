@@ -1,0 +1,7 @@
+{
+  "cases": 40815,
+  "tflite_layer_cases": 32838,
+  "fault_cases": 5,
+  "oracle": "gemmlowp scalar SaturatingRoundingDoublingHighMul + RoundingDivideByPOT",
+  "seed": 914
+}

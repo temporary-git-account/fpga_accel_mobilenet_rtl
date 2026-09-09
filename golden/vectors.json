@@ -1,0 +1,54 @@
+[
+  {
+    "file": "background/0001.BMP",
+    "sha256": "64539b0e23ed918f8a7e0fa78fb6b75d25a1e646283bbf75359579aa41e1b0e2",
+    "width": 256,
+    "height": 256,
+    "truth": 0,
+    "pred": 0,
+    "scores_u8": [
+      255,
+      0
+    ],
+    "vector": "background_0001"
+  },
+  {
+    "file": "background/0002.BMP",
+    "sha256": "df3a52bec27b012b0c9a015ce341fbcf58199a6df8df408387cd8af3b0312585",
+    "width": 256,
+    "height": 256,
+    "truth": 0,
+    "pred": 0,
+    "scores_u8": [
+      255,
+      0
+    ],
+    "vector": "background_0002"
+  },
+  {
+    "file": "oneblade/0000.BMP",
+    "sha256": "f795d8b979e15eed8006b6322e683fa67b19e9fc84a8ce602326f588c7f2af96",
+    "width": 256,
+    "height": 256,
+    "truth": 1,
+    "pred": 1,
+    "scores_u8": [
+      0,
+      255
+    ],
+    "vector": "oneblade_0000"
+  },
+  {
+    "file": "oneblade/0001.BMP",
+    "sha256": "9022c17ed2b1c85b4b7d0df4085dd1086bdce18800d946cf11b4a528860ed40a",
+    "width": 256,
+    "height": 256,
+    "truth": 1,
+    "pred": 1,
+    "scores_u8": [
+      0,
+      255
+    ],
+    "vector": "oneblade_0001"
+  }
+]

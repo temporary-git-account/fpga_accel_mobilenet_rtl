@@ -1,0 +1,316 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.1 (win64) Build 6140274 Thu May 22 00:12:29 MDT 2025
+| Date         : Wed Sep  9 19:58:02 2026
+| Host         : Siddharth-PC running 64-bit major release  (build 9200)
+| Command      : report_cdc -details -file MOBILENET_RTL_SOURCE/soc/build_166.667_quantfix/cdc.rpt
+| Design       : system_wrapper
+| Device       : 7z010-clg400
+| Speed File   : -1  PRODUCTION 1.12 2019-11-22
+| Design State : Physopt postRoute
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+CDC Report
+
+ID      Severity  Count  Description
+------  --------  -----  ----------------------------------------------
+CDC-3   Info         14  1-bit synchronized with ASYNC_REG property
+CDC-15  Warning     269  Clock enable controlled CDC structure detected
+
+Source Clock: clk_fpga_1
+Destination Clock: clk_fpga_0
+CDC Type: No Common Primary Clock
+
+Row  ID      Severity  Description                                     Depth  Exception                Source (From)  Destination (To)
+---  ------  --------  ----------------------------------------------  -----  -----------------------  -------------  ----------------
+  1  CDC-3   Info      1-bit synchronized with ASYNC_REG property          3  False Path               <hidden>       <hidden>
+  2  CDC-3   Info      1-bit synchronized with ASYNC_REG property          3  False Path               <hidden>       <hidden>
+  3  CDC-3   Info      1-bit synchronized with ASYNC_REG property          3  False Path               <hidden>       <hidden>
+  4  CDC-3   Info      1-bit synchronized with ASYNC_REG property          3  False Path               <hidden>       <hidden>
+  5  CDC-3   Info      1-bit synchronized with ASYNC_REG property          3  False Path               <hidden>       <hidden>
+  6  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+  7  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+  8  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+  9  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 10  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 11  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 12  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 13  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 14  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 15  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 16  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 17  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 18  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 19  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 20  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 21  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 22  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 23  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 24  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 25  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 26  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 27  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 28  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 29  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 30  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 31  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 32  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 33  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 34  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 35  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 36  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 37  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 38  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 39  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 40  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 41  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 42  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 43  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 44  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 45  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 46  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 47  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 48  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 49  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 50  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 51  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 52  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 53  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 54  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 55  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 56  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 57  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 58  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 59  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 60  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 61  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 62  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 63  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 64  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 65  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 66  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 67  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 68  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 69  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 70  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 71  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 72  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 73  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 74  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 75  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 76  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 77  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 78  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 79  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 80  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 81  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 82  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 83  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 84  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 85  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 86  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 87  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 88  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 89  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 90  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 91  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 92  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 93  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 94  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 95  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 96  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 97  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 98  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+ 99  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+100  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+101  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+102  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+103  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+104  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+105  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+106  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+107  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+108  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+109  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+110  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+111  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+112  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+113  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+114  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+115  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+116  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+117  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+118  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+119  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+120  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+121  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+122  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+123  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+124  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+125  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+126  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+127  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+128  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+129  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+130  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+131  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+132  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+133  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+134  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+135  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+136  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+137  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+138  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+139  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+140  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+141  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+142  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+143  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+144  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+145  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+146  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+147  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+148  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+149  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+150  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+151  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+152  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+153  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+154  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+155  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+156  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+157  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+158  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+159  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+160  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+161  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+162  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+163  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+164  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+165  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+166  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+167  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+168  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+169  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+170  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+171  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+172  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+173  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+174  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+175  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+176  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+177  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+178  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+179  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+180  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+181  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+182  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+183  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+184  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+185  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+186  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+187  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+188  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+189  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+190  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+191  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+192  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+193  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+194  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+195  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+196  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+197  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+198  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+199  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+200  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+201  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+202  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+203  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+204  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+205  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+206  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>       <hidden>
+
+Source Clock: clk_fpga_0
+Destination Clock: clk_fpga_1
+CDC Type: No Common Primary Clock
+
+Row  ID      Severity  Description                                     Depth  Exception                Source (From)                                                                Destination (To)
+---  ------  --------  ----------------------------------------------  -----  -----------------------  ---------------------------------------------------------------------------  --------------------------------------------------------------------------------------------------
+  1  CDC-3   Info      1-bit synchronized with ASYNC_REG property          3  False Path               <hidden>                                                                     <hidden>
+  2  CDC-3   Info      1-bit synchronized with ASYNC_REG property          3  False Path               <hidden>                                                                     <hidden>
+  3  CDC-3   Info      1-bit synchronized with ASYNC_REG property          3  False Path               <hidden>                                                                     <hidden>
+  4  CDC-3   Info      1-bit synchronized with ASYNC_REG property          3  False Path               <hidden>                                                                     <hidden>
+  5  CDC-3   Info      1-bit synchronized with ASYNC_REG property          3  False Path               <hidden>                                                                     <hidden>
+  6  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+  7  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+  8  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+  9  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 10  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 11  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 12  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 13  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 14  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 15  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 16  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 17  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 18  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 19  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 20  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 21  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 22  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 23  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 24  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 25  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 26  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 27  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 28  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 29  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 30  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 31  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 32  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 33  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 34  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 35  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 36  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 37  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 38  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 39  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 40  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 41  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 42  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 43  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 44  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 45  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 46  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 47  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 48  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 49  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 50  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 51  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 52  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 53  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 54  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 55  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 56  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 57  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 58  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 59  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 60  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 61  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 62  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 63  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 64  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 65  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 66  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 67  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 68  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 69  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 70  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 71  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 72  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 73  CDC-15  Warning   Clock enable controlled CDC structure detected      0  Max Delay Datapath Only  <hidden>                                                                     <hidden>
+ 74  CDC-3   Info      1-bit synchronized with ASYNC_REG property          5  False Path               system_i/rst_bus/U0/ACTIVE_LOW_PR_OUT_DFF[0].FDRE_PER_N/C                    system_i/sc_ctl/inst/clk_map/psr_aclk1/U0/EXT_LPF/ACTIVE_LOW_AUX.ACT_LO_AUX/syncstages_ff_reg[0]/D
+ 75  CDC-3   Info      1-bit synchronized with ASYNC_REG property          4  False Path               system_i/sc_ctl/inst/clk_map/psr0/U0/ACTIVE_LOW_BSR_OUT_DFF[0].FDRE_BSR_N/C  system_i/sc_ctl/inst/clk_map/psr_aclk1/U0/EXT_LPF/ACTIVE_LOW_EXT.ACT_LO_EXT/syncstages_ff_reg[0]/D
+ 76  CDC-3   Info      1-bit synchronized with ASYNC_REG property          5  False Path               system_i/rst_bus/U0/ACTIVE_LOW_PR_OUT_DFF[0].FDRE_PER_N/C                    system_i/sc_hp/inst/clk_map/psr_aclk/U0/EXT_LPF/ACTIVE_LOW_AUX.ACT_LO_AUX/syncstages_ff_reg[0]/D
+ 77  CDC-3   Info      1-bit synchronized with ASYNC_REG property          4  False Path               system_i/sc_hp/inst/clk_map/psr0/U0/ACTIVE_LOW_BSR_OUT_DFF[0].FDRE_BSR_N/C   system_i/sc_hp/inst/clk_map/psr_aclk/U0/EXT_LPF/ACTIVE_LOW_EXT.ACT_LO_EXT/syncstages_ff_reg[0]/D
+

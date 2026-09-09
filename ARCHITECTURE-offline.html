@@ -1,0 +1,1151 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="A detailed RTL study guide for a 32-lane integer MobileNet convolution accelerator."><title>MobileNet RTL — From Integer Math to Hardware</title><style>:root{--ink:#172b3d;--muted:#596c7e;--blue:#155d91;--line:#d8e1e8;--paper:#fff;--soft:#f3f7fa;--green:#24735d}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.72 system-ui,-apple-system,"Segoe UI",sans-serif}a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}nav{position:fixed;left:0;top:0;bottom:0;width:265px;padding:26px 20px;overflow-y:auto;background:#f3f6f9;border-right:1px solid var(--line)}.brand{font-size:13px;font-weight:800;letter-spacing:.12em;color:var(--blue)}nav input{width:100%;margin:17px 0;padding:9px;border:1px solid var(--line);border-radius:5px}nav a{display:block;font-size:12.5px;line-height:1.4;padding:7px 0;color:var(--muted)}nav a:hover,nav a.active{color:var(--blue)}nav .sub{padding-left:12px;font-size:11.5px}.links{display:flex;gap:20px;font-size:13px;margin:0 0 28px}.tag{display:inline-block;color:var(--green);background:#eaf4ef;padding:5px 9px;font-size:11px;font-weight:700;letter-spacing:.07em;border-radius:3px}.wrap{margin-left:265px;max-width:1120px;padding:42px 65px 100px}h1{font-size:39px;line-height:1.17;letter-spacing:-.035em;margin:18px 0 24px}h2{font-size:26px;line-height:1.3;margin:68px 0 20px;padding-top:16px;border-top:2px solid var(--line)}h3{font-size:20px;line-height:1.35;margin:34px 0 15px}h1,h2,h3{scroll-margin-top:24px}p{margin:15px 0}li{margin:7px 0}strong{color:#122f45}code{font:13px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace;background:#eff3f6;padding:2px 4px;border-radius:3px}pre{padding:17px 20px;background:#f4f7fa;border:1px solid var(--line);border-radius:6px;overflow:auto}pre code{padding:0;background:none;font-size:12px}.table-scroll{overflow:auto;margin:24px 0}table{border-collapse:collapse;width:100%;font-size:12.5px;line-height:1.55}th,td{padding:10px 11px;border-bottom:1px solid var(--line);vertical-align:top;text-align:left}th{background:#eaf0f5;color:#274d68;font-weight:700}tr:nth-child(even) td{background:#f8fafb}blockquote{border-left:3px solid var(--blue);padding:4px 20px;margin-left:0;background:var(--soft)}figure{margin:28px 0;padding:22px 16px;border:1px solid var(--line);border-radius:7px;background:#fafcfe}figure svg{width:100%;height:auto;display:block}figcaption{font-size:12px;color:var(--muted);margin:14px 7px 0}.demo{border:1px solid #abc5d8;padding:24px;background:#f3f8fc;border-radius:7px;margin:26px 0}.demo h4{margin:0 0 6px;font-size:17px}.demo p{font-size:13px;color:var(--muted)}.fields{display:grid;grid-template-columns:repeat(3,minmax(100px,1fr));gap:13px;margin:18px 0}.fields label{font-size:11px;font-weight:700;display:flex;flex-direction:column;gap:5px}.fields input,.fields select{font:13px system-ui;padding:7px;width:100%;border:1px solid #b5c9d7;background:white;border-radius:4px}output{display:block;white-space:pre-wrap;font:12px/1.7 Consolas,monospace;background:white;padding:13px;border-left:3px solid var(--blue)}button{font:12px system-ui;padding:7px 12px;background:white;border:1px solid #94b4cb;border-radius:4px;color:var(--blue);cursor:pointer}.tile{display:grid;grid-template-columns:repeat(8,1fr);gap:5px;margin:18px 0}.lane{font:10px/1.4 Consolas,monospace;text-align:center;padding:9px 1px;background:#dcecf7;border:1px solid #9fbdd4;border-radius:4px;cursor:pointer}.lane.off{background:#eceff2;color:#8a949e;border-color:#dce1e6}.lane.selected{background:#1b638f;color:#fff}.flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.flow span{background:#e7f0f7;border:1px solid #b9cede;padding:9px 12px;border-radius:4px;font:12px Consolas,monospace}.flow b{color:var(--blue)}.statusline{font-size:11px;color:var(--muted);margin-top:16px}.progress{position:fixed;top:0;left:265px;height:3px;background:var(--blue);width:0;z-index:10}.filter-row{font-size:12px;color:var(--muted);margin:15px 0}.filter-row input{padding:8px;border:1px solid var(--line);border-radius:4px;margin-left:10px}footer{margin-top:70px;font-size:12px;color:var(--muted);border-top:1px solid var(--line);padding-top:20px}@media(max-width:1000px){nav{width:215px}.wrap{margin-left:215px;padding:35px}.progress{left:215px}}@media(max-width:740px){nav{position:relative;width:auto;max-height:270px}.wrap{margin:0;padding:24px 19px}.progress{left:0}h1{font-size:31px}.fields{grid-template-columns:repeat(2,minmax(90px,1fr))}h2{font-size:23px}.lane{font-size:9px}}@media print{nav,.progress,.links,button,.filter-row{display:none}.wrap{margin:0;max-width:none;padding:0}body{font-size:10pt}h1{font-size:25pt}h2{font-size:18pt;margin-top:30px;break-after:avoid}h3{break-after:avoid}pre,figure,.demo,tr{break-inside:avoid}.table-scroll{overflow:visible}a{color:inherit}.fields{display:none}.demo{background:white}figure{background:white}table{font-size:8pt}footer{margin-top:20px}}
+
+[hidden]{display:none!important}
+</style></head><body><div id="progress" class="progress"></div><nav aria-label="Study guide contents"><div class="brand">MOBILENET / RTL</div><div class="statusline">Arithmetic → scheduler → memory → gates</div><input id="toc-search" placeholder="Find a chapter…" aria-label="Filter contents"><div class="toc"><a class="chapter" href="#1-what-this-hardware-implements">1. What this hardware implements</a><a class="chapter" href="#2-source-map-read-these-blocks-in-order">2. Source map: read these blocks in order</a><a class="chapter" href="#3-tensor-layout-and-convolution-math">3. Tensor layout and convolution math</a><a class="sub" href="#3-1-nhwc-channels-are-adjacent-in-memory">3.1 NHWC: channels are adjacent in memory</a><a class="sub" href="#3-2-ordinary-convolution">3.2 Ordinary convolution</a><a class="sub" href="#3-3-depthwise-convolution">3.3 Depthwise convolution</a><a class="sub" href="#3-4-padding-and-output-geometry">3.4 Padding and output geometry</a><a class="chapter" href="#4-quantization-is-arithmetic-not-just-an-integer-datatype">4. Quantization is arithmetic, not just an integer datatype</a><a class="sub" href="#4-1-scale-and-zero-point">4.1 Scale and zero point</a><a class="sub" href="#4-2-why-each-channel-has-a-multiplier-and-a-shift">4.2 Why each channel has a multiplier and a shift</a><a class="sub" href="#4-3-the-exact-two-rounding-steps">4.3 The exact two rounding steps</a><a class="sub" href="#4-4-a-worked-integer-example">4.4 A worked integer example</a><a class="sub" href="#4-5-mean-and-softmax-in-the-graph-testbench">4.5 Mean and softmax in the graph testbench</a><a class="chapter" href="#5-the-4-8-compute-tile">5. The 4×8 compute tile</a><a class="sub" href="#5-1-ordinary-convolution-broadcast-activations">5.1 Ordinary convolution: broadcast activations</a><a class="sub" href="#5-2-depthwise-independent-channel-activations">5.2 Depthwise: independent channel activations</a><a class="sub" href="#5-3-on-chip-banks-and-what-remains-resident">5.3 On-chip banks and what remains resident</a><a class="sub" href="#5-4-vector-mac-ready-valid-and-accumulation">5.4 vector_mac: ready/valid and accumulation</a><a class="chapter" href="#6-requantization-as-an-eight-stage-circuit">6. Requantization as an eight-stage circuit</a><a class="chapter" href="#7-the-layer-scheduler-is-the-main-architecture">7. The layer scheduler is the main architecture</a><a class="sub" href="#7-1-the-high-level-sequence">7.1 The high-level sequence</a><a class="sub" href="#7-2-map-the-conceptual-sequence-to-actual-states">7.2 Map the conceptual sequence to actual states</a><a class="sub" href="#7-3-address-checks-and-overflow">7.3 Address checks and overflow</a><a class="sub" href="#7-4-why-this-schedule-is-slow">7.4 Why this schedule is slow</a><a class="chapter" href="#8-from-the-internal-memory-port-to-axi">8. From the internal memory port to AXI</a><a class="sub" href="#8-1-a-small-internal-request-interface">8.1 A small internal request interface</a><a class="sub" href="#8-2-the-128-byte-read-cache">8.2 The 128-byte read cache</a><a class="sub" href="#8-3-independent-axi-write-channels">8.3 Independent AXI write channels</a><a class="sub" href="#8-4-timeouts-do-not-erase-outstanding-traffic">8.4 Timeouts do not erase outstanding traffic</a><a class="chapter" href="#9-axi-lite-control-and-layer-descriptors">9. AXI-Lite control and layer descriptors</a><a class="chapter" href="#10-cancellation-and-reset-behavior">10. Cancellation and reset behavior</a><a class="chapter" href="#11-clock-domains-and-physical-implementation">11. Clock domains and physical implementation</a><a class="chapter" href="#12-a-synthesis-bug-that-rtl-simulation-did-not-catch">12. A synthesis bug that RTL simulation did not catch</a><a class="chapter" href="#13-verification-ladder-and-what-each-rung-proves">13. Verification ladder and what each rung proves</a><a class="chapter" href="#14-the-complete-operator-inventory">14. The complete operator inventory</a><a class="chapter" href="#15-where-to-optimize-next">15. Where to optimize next</a><a class="chapter" href="#16-study-exercises">16. Study exercises</a><a class="chapter" href="#17-glossary-and-suggested-reading-order">17. Glossary and suggested reading order</a></div><div class="statusline">Offline edition · September 2026</div></nav><main class="wrap"><div class="links"><a href="README.md">README</a><a href="GUIDE.md">Run guide</a><a href="DESIGN.md">Markdown source</a><button id="print">Print / save PDF</button></div><span class="tag">32 MAC LANES · INT8 · ZYNQ-7010</span><h1>MobileNet convolution: from integer math to RTL</h1>
+<p><em>A study guide for a handwritten SystemVerilog accelerator on the Zynq-7010.
+Read the arithmetic first, then follow it through buffers, pipelines, state
+machines and AXI transactions. Every implementation claim refers to the source
+files in this directory. Snapshot: 9 September 2026.</em></p>
+<h2 id="1-what-this-hardware-implements">1. What this hardware implements</h2>
+<p>The design accelerates <strong>integer convolution and depthwise convolution</strong> from a
+MobileNet-v1, width multiplier 1.0, input 224×224×3, with a two-class classifier
+head. One reusable layer engine executes 28 convolution operators sequentially.
+It does not instantiate a separate physical circuit for every network layer.</p>
+<p>The exported graph has 37 operators: 15 regular convolutions, 13 depthwise
+convolutions, four explicit pads, two quantization conversions, mean, reshape
+and softmax. Only the <strong>28 convolutions are implemented by this RTL</strong>. The
+full-graph C++ testbench evaluates the other nine operations as numerical
+scaffolding. A full-graph simulation therefore proves the composition of the
+RTL convolutions and that scaffold; it does not mean all 37 operators exist
+as fabric blocks.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Implemented value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Target part</td>
+<td>XC7Z010-1CLG400 on Z-turn Lite</td>
+</tr>
+<tr>
+<td>Core clock</td>
+<td>166.667 MHz; 6 ns period</td>
+</tr>
+<tr>
+<td>AXI interconnect / memory-side clock</td>
+<td>100 MHz; 10 ns period</td>
+</tr>
+<tr>
+<td>Spatial tile</td>
+<td>Up to four output pixels</td>
+</tr>
+<tr>
+<td>Channel tile</td>
+<td>Up to eight output channels</td>
+</tr>
+<tr>
+<td>Multiplier lanes</td>
+<td>32, organized as 4×8</td>
+</tr>
+<tr>
+<td>Corrected activation</td>
+<td>Signed 9 bits</td>
+</tr>
+<tr>
+<td>Weight</td>
+<td>Signed 8 bits, symmetric zero point</td>
+</tr>
+<tr>
+<td>Product / accumulation</td>
+<td>Signed 17-bit product / signed 32-bit sum</td>
+</tr>
+<tr>
+<td>Output requantization</td>
+<td>Eight registered stages, one result per advancing cycle</td>
+</tr>
+<tr>
+<td>Kernels / stride</td>
+<td>1×1 or 3×3; stride 1 or 2</td>
+</tr>
+<tr>
+<td>Maximum reduction length</td>
+<td>1,024 terms per output</td>
+</tr>
+<tr>
+<td>Memory port</td>
+<td>32-bit internal request/response to 64-bit AXI4</td>
+</tr>
+<tr>
+<td>Read cache</td>
+<td>Eight direct-mapped lines × 16 bytes = 128 bytes</td>
+</tr>
+<tr>
+<td>Outstanding memory transactions</td>
+<td>One</td>
+</tr>
+</tbody>
+</table></div>
+<p>The implemented part uses 5,129 LUTs, 5,236 flip-flops, 42 DSPs and 12 RAMB18
+blocks. The 12 RAMB18 blocks equal six BRAM36 capacities. The FPGA has 80 DSPs
+and 60 BRAM36 capacities; those are device totals, not unused resources.
+Weights and full activation tensors live in external DDR; only tiles and a
+small read cache live on chip.</p>
+<p>The 28 convolutions require <strong>567,718,400 multiply-accumulates per image</strong>.
+Weights plus biases occupy 3,230,920 bytes. The largest intermediate tensor
+occupies 817,216 bytes. These sizes explain why a layer-by-layer DDR design
+was a useful first implementation on this small device.</p>
+<h2 id="2-source-map-read-these-blocks-in-order">2. Source map: read these blocks in order</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>File</th>
+<th>Responsibility</th>
+<th>Useful reading question</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="rtl/vector_mac.sv">rtl/vector_mac.sv</a></td>
+<td>32 lane products and accumulation</td>
+<td>Which operands are shared?</td>
+</tr>
+<tr>
+<td><a href="rtl/requantize.sv">rtl/requantize.sv</a></td>
+<td>Bias, fixed-point scale, rounding and clamp</td>
+<td>Where can a one-bit error appear?</td>
+</tr>
+<tr>
+<td><a href="rtl/layer_engine.sv">rtl/layer_engine.sv</a></td>
+<td>Tile loading, addressing and scheduling</td>
+<td>What is the engine waiting for?</td>
+</tr>
+<tr>
+<td><a href="rtl/axi_memory.sv">rtl/axi_memory.sv</a></td>
+<td>Read cache and AXI transactions</td>
+<td>When is a transaction truly finished?</td>
+</tr>
+<tr>
+<td><a href="rtl/accelerator_top.sv">rtl/accelerator_top.sv</a></td>
+<td>AXI-Lite registers and block composition</td>
+<td>When may configuration change?</td>
+</tr>
+<tr>
+<td><a href="fpga/accelerator_top_v.v">fpga/accelerator_top_v.v</a></td>
+<td>Verilog integration wrapper</td>
+<td>How are interfaces inferred?</td>
+</tr>
+<tr>
+<td><a href="fpga/build_soc.tcl">fpga/build_soc.tcl</a></td>
+<td>Clocks, reset, SmartConnect and DDR hookup</td>
+<td>Which crossings need analysis?</td>
+</tr>
+</tbody>
+</table></div>
+<p><code>rtl/mac_tile.sv</code> is an earlier arithmetic teaching/probe block. Its dedicated
+testbench is useful, but the production <code>layer_engine</code> instantiates
+<code>vector_mac</code>, not <code>mac_tile</code>. Do not infer the production schedule from the
+older probe alone.</p>
+<figure><svg viewBox="0 0 770 425" role="img" aria-labelledby="arch-title" xmlns="http://www.w3.org/2000/svg"><title id="arch-title">Layer control feeds banks, vector MAC and requantizer; shared memory port connects through a cache to DDR.</title><defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="#376f98"/></marker></defs><g font-family="system-ui" fill="#173a53"><rect x="15" y="20" width="220" height="66" rx="6" fill="#eaf2f8" stroke="#85a8c3"/><text x="125.0" y="45" text-anchor="middle" font-size="14" font-weight="600">AXI-Lite control</text><text x="125.0" y="67" text-anchor="middle" font-size="11" fill="#536e83">descriptor • START • DONE • ACK</text><rect x="270" y="20" width="230" height="66" rx="6" fill="#eaf2f8" stroke="#85a8c3"/><text x="385.0" y="45" text-anchor="middle" font-size="14" font-weight="600">Layer engine</text><text x="385.0" y="67" text-anchor="middle" font-size="11" fill="#536e83">coordinates • schedule • bounds</text><path d="M235,53 L270,53" fill="none" stroke="#376f98" stroke-width="2" marker-end="url(#arrow)"/><rect x="270" y="125" width="230" height="66" rx="6" fill="#eaf2f8" stroke="#85a8c3"/><text x="385.0" y="150" text-anchor="middle" font-size="14" font-weight="600">On-chip tile banks</text><text x="385.0" y="172" text-anchor="middle" font-size="11" fill="#536e83">4 activation banks • 8 weight banks</text><path d="M385,86 L385,125" fill="none" stroke="#376f98" stroke-width="2" marker-end="url(#arrow)"/><rect x="270" y="230" width="230" height="66" rx="6" fill="#eaf2f8" stroke="#85a8c3"/><text x="385.0" y="255" text-anchor="middle" font-size="14" font-weight="600">32-lane vector MAC</text><text x="385.0" y="277" text-anchor="middle" font-size="11" fill="#536e83">4 pixels × 8 output channels</text><path d="M385,191 L385,230" fill="none" stroke="#376f98" stroke-width="2" marker-end="url(#arrow)"/><rect x="270" y="335" width="230" height="66" rx="6" fill="#eaf2f8" stroke="#85a8c3"/><text x="385.0" y="360" text-anchor="middle" font-size="14" font-weight="600">One requantizer</text><text x="385.0" y="382" text-anchor="middle" font-size="11" fill="#536e83">serialize sums • 8 registered stages</text><path d="M385,296 L385,335" fill="none" stroke="#376f98" stroke-width="2" marker-end="url(#arrow)"/><rect x="535" y="125" width="220" height="66" rx="6" fill="#eaf2f8" stroke="#85a8c3"/><text x="645.0" y="150" text-anchor="middle" font-size="14" font-weight="600">128-byte read cache</text><text x="645.0" y="172" text-anchor="middle" font-size="11" fill="#536e83">8 lines • 16 bytes each</text><rect x="535" y="230" width="220" height="66" rx="6" fill="#eaf2f8" stroke="#85a8c3"/><text x="645.0" y="255" text-anchor="middle" font-size="14" font-weight="600">AXI4 memory master</text><text x="645.0" y="277" text-anchor="middle" font-size="11" fill="#536e83">64-bit • one outstanding request</text><rect x="535" y="335" width="220" height="66" rx="6" fill="#edf5f0" stroke="#85a8c3"/><text x="645.0" y="360" text-anchor="middle" font-size="14" font-weight="600">DDR tensors</text><text x="645.0" y="382" text-anchor="middle" font-size="11" fill="#536e83">weights • input • output</text><path d="M645,191 L645,230" fill="none" stroke="#376f98" stroke-width="2" marker-end="url(#arrow)"/><path d="M645,296 L645,335" fill="none" stroke="#376f98" stroke-width="2" marker-end="url(#arrow)"/><path d="M500,53 L645,53 L645,125" fill="none" stroke="#376f98" stroke-width="2" marker-end="url(#arrow)"/><path d="M500,368 L515,368 L515,263 L535,263" fill="none" stroke="#376f98" stroke-width="2" marker-end="url(#arrow)"/><text x="532" y="41" font-size="10">load requests</text><text x="513" y="314" font-size="10" transform="rotate(-90 513 314)">output writes</text></g></svg><figcaption>Figure 1. Production blocks. The numerical testbench supplies descriptors and DDR contents; activation/weight fetch, convolution and output stores are driven by the RTL.</figcaption></figure>
+<h2 id="3-tensor-layout-and-convolution-math">3. Tensor layout and convolution math</h2>
+<h3 id="3-1-nhwc-channels-are-adjacent-in-memory">3.1 NHWC: channels are adjacent in memory</h3>
+<p>Batch size is one. A tensor is written as <code>[H, W, C]</code> below. NHWC means that
+all channels of one pixel are contiguous, then the next pixel, then the next
+row. For a byte tensor whose base is <code>B</code>:</p>
+<pre><code class="language-text">address(y, x, c) = B + ((y × W + x) × C + c)
+</code></pre>
+<p>For <code>[2,3,4]</code>, the four channels of pixel <code>(0,0)</code> occupy offsets 0–3; pixel
+<code>(0,1)</code> occupies 4–7; pixel <code>(1,0)</code> starts at 12. A 32-bit memory read can
+therefore contain four neighboring channels. The current engine still issues
+individual logical accesses while the read cache captures some locality.</p>
+<p>Regular-convolution weights use <strong>OHWI</strong>: output channel, kernel row, kernel
+column, input channel. Their byte offset is:</p>
+<pre><code class="language-text">weight_offset(co, ky, kx, ci) = (((co × K + ky) × K + kx) × Cin + ci)
+</code></pre>
+<p>Depthwise weights use <code>[1,K,K,C]</code> with depth multiplier one:</p>
+<pre><code class="language-text">depthwise_weight_offset(ky, kx, c) = (ky × K + kx) × C + c
+</code></pre>
+<p>Getting the tensor values right but flattening one layout incorrectly produces
+plausible-looking yet wrong output. Index equations are part of the datapath.</p>
+<h3 id="3-2-ordinary-convolution">3.2 Ordinary convolution</h3>
+<p>For output pixel <code>(yo,xo)</code> and output channel <code>co</code>, the reduction is:</p>
+<pre><code class="language-text">acc = Σky Σkx Σci (input[yo×S+ky−Pt, xo×S+kx−Pl, ci] − Zin)
+                    × weight[co,ky,kx,ci]
+biased = acc + bias[co]
+</code></pre>
+<p><code>S</code> is stride, <code>Pt/Pl</code> are top/left padding and <code>Zin</code> is the input zero point.
+Only coordinates inside the input tensor participate; an outside sample has
+quantized value <code>Zin</code>, which contributes exactly zero after correction.</p>
+<p>The number of reduction terms is <code>K² × Cin</code>; MAC count is
+<code>Hout × Wout × Cout × K² × Cin</code>. The first layer maps <code>[224,224,3]</code> to
+<code>[112,112,32]</code> using 3×3 stride 2, for 10,838,016 MACs.</p>
+<h3 id="3-3-depthwise-convolution">3.3 Depthwise convolution</h3>
+<p>Depthwise convolution processes each channel independently. Output channel <code>c</code>
+uses only input channel <code>c</code>, so the inner <code>Σci</code> disappears. The reduction is
+<code>K²</code> terms and the MAC count is <code>Hout × Wout × C × K²</code>.</p>
+<p>A following 1×1 <strong>pointwise</strong> convolution mixes the channels. This pair is the
+central MobileNet idea: spatial filtering and channel mixing are separate.
+For a 3×3 layer with 128 input and 128 output channels, a conventional layer
+needs 147,456 MACs per output pixel; depthwise plus pointwise needs
+<code>9×128 + 128×128 = 17,536</code>, about 8.4× fewer. This is an arithmetic comparison
+at equal spatial size, not a promise of an 8.4× speedup for this scheduler.</p>
+<h3 id="3-4-padding-and-output-geometry">3.4 Padding and output geometry</h3>
+<p>For a normal convolution, output height is
+<code>floor((Hin + Pt + Pb − K)/S) + 1</code>; width follows the same rule.
+Padding can be asymmetric. In the exported graph, some stride-2 depthwise
+steps receive an explicitly padded tensor, such as 112×112 becoming 113×113
+before a 3×3 stride-2 operation produces 56×56.</p>
+<p>The layer engine validates bounded dimensions and operand forms, then uses the
+provided output geometry. It does not derive and enforce every framework shape
+rule; unusual but address-safe padded shapes are deliberately exercised in the
+testbench. Treat descriptor generation and RTL range checking as complementary.</p>
+<h2 id="4-quantization-is-arithmetic-not-just-an-integer-datatype">4. Quantization is arithmetic, not just an integer datatype</h2>
+<h3 id="4-1-scale-and-zero-point">4.1 Scale and zero point</h3>
+<p>A quantized value represents approximately <code>real = scale × (q − zero_point)</code>.
+The image arrives as uint8 in the numerical fixtures. The graph's first
+conversion subtracts 128 to produce int8. Subsequent layer zero points are
+exported per tensor; they are not all interchangeable with −128.</p>
+<p>The activation correction must be <strong>signed 9-bit</strong>. Two signed 8-bit operands
+can differ by −255…255. For example, <code>127 − (−128) = 255</code>, which would become
+−1 if narrowed to int8 before multiplication. Weight zero points are zero;
+weights are signed int8. A signed 9×8 multiply fits a signed 17-bit product.</p>
+<p>The exporter checked a conservative per-output-channel bound:</p>
+<pre><code class="language-text">abs(bias) + 255 × sum(abs(weights)) &lt; 2³¹
+</code></pre>
+<p>The maximum recorded bound is 1,073,742,079, below 2,147,483,648. This establishes
+that valid model operands fit the 32-bit accumulators, including partial sums.
+It is not a blanket guarantee for arbitrary future weights or descriptor sizes.</p>
+<h3 id="4-2-why-each-channel-has-a-multiplier-and-a-shift">4.2 Why each channel has a multiplier and a shift</h3>
+<p>Accumulation has the product of activation and weight scales. Output has its
+own scale. The ratio is encoded using a positive Q31 multiplier <code>M</code> followed
+by a right shift <code>s</code>. Each output channel has its own bias, multiplier and
+shift, packed into a 16-byte parameter record:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align:right">Byte offset</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">0</td>
+<td>Signed int32 bias</td>
+</tr>
+<tr>
+<td style="text-align:right">4</td>
+<td>Positive Q31 multiplier</td>
+</tr>
+<tr>
+<td style="text-align:right">8</td>
+<td>uint32 right shift, validated 0…31</td>
+</tr>
+<tr>
+<td style="text-align:right">12</td>
+<td>Reserved</td>
+</tr>
+</tbody>
+</table></div>
+<p>Actual convolution shifts in this model span 1…27. The reusable block accepts
+0…31. Positive left shifts are not implemented. The activation minimum/maximum
+encode fused clamping, including the exported equivalents of activation limits;
+do not substitute hardcoded floating-point ReLU bounds.</p>
+<h3 id="4-3-the-exact-two-rounding-steps">4.3 The exact two rounding steps</h3>
+<p>The numerical authority is the TensorFlow Lite 2.15.1 built-in reference path.
+For positive <code>M</code>, the first operation is:</p>
+<pre><code class="language-text">v = acc + bias                     // require signed int32 fit
+p = int64(v) × M
+h = floor((p + 2³⁰) / 2³¹)         // signed arithmetic shift
+</code></pre>
+<p>This high multiply rounds negative halfway cases toward positive infinity.
+Then divide <code>h</code> by <code>2ˢ</code>, rounding halfway cases <strong>away from zero</strong>:</p>
+<pre><code class="language-text">mask      = (1 &lt;&lt; s) − 1
+base      = arithmetic_shift_right(h, s)
+remainder = h &amp; mask
+threshold = (mask &gt;&gt; 1) + (h &lt; 0 ? 1 : 0)
+scaled    = base + (remainder &gt; threshold ? 1 : 0)
+output    = clamp(scaled + Zout, activation_min, activation_max)
+</code></pre>
+<p>For <code>s=0</code>, mask and rounding increment are zero. A single floating-point
+multiply followed by a cast is not equivalent to these two steps. Neither is
+an unspecified optimized inference kernel. Exact reference bytes matter.</p>
+<h3 id="4-4-a-worked-integer-example">4.4 A worked integer example</h3>
+<p>Take input bytes already interpreted as int8: <code>[-128, -127, 0]</code>, zero point
+<code>−128</code>, weights <code>[2, −3, 1]</code>, bias <code>3</code>. Corrected activations are <code>[0,1,128]</code>.
+The dot product is <code>0×2 + 1×(−3) + 128×1 = 125</code>, so <code>v=128</code>.
+With <code>M=2³⁰</code>, the first scale gives <code>h=64</code>. Shift by two gives <code>16</code>. Add output
+zero point <code>−5</code> to get <code>11</code>, then clamp to the allowed interval.</p>
+<p>For a signed tie, take <code>v=−3</code>, <code>M=2³⁰</code>: the high result is <code>−1</code>, because
+<code>−1.5</code> rounds toward positive infinity. A subsequent right shift of one rounds
+<code>−0.5</code> away from zero, producing <code>−1</code>. The two tie rules intentionally differ.</p>
+<section class="demo" aria-label="Exact integer requantization calculator"><h4>Try the integer datapath</h4><p>Uses exact integer arithmetic, including the two different signed tie rules. This is an equation calculator, not a cycle simulator.</p><div class="fields"><label>Accumulator<input id="qacc" type="number" step="1" value="125"></label><label>Bias<input id="qbias" type="number" step="1" value="3"></label><label>Q31 multiplier<input id="qmult" type="number" step="1" value="1073741824"></label><label>Right shift<input id="qshift" type="number" step="1" value="2"></label><label>Output zero point<input id="qzero" type="number" step="1" value="-5"></label><label>Activation minimum<input id="qlo" type="number" step="1" value="-128"></label><label>Activation maximum<input id="qhi" type="number" step="1" value="127"></label></div><button id="qtie">Negative tie example</button> <button id="qreset">Reset worked example</button><p></p><output id="qout" aria-live="polite">Worked example output: 11. Enable JavaScript to edit the inputs.</output></section>
+<h3 id="4-5-mean-and-softmax-in-the-graph-testbench">4.5 Mean and softmax in the graph testbench</h3>
+<p>The final 7×7 feature tensor reduces to 1×1×1024. The numerical scaffold scales
+the sum of zero-point-corrected values using the reference reduction multiplier;
+it does not first round an integer average and then rescale it.</p>
+<p>For the two-class softmax, a 511-entry table maps logit difference −255…255 to
+an output pair. All 65,536 int8 logit pairs were checked when deriving this
+model-specific table. It is not a general multiclass softmax circuit and is
+not instantiated in this RTL. These details explain how the graph testbench
+checks the final head without confusing support calculations with hardware.</p>
+<h2 id="5-the-4-8-compute-tile">5. The 4×8 compute tile</h2>
+<h3 id="5-1-ordinary-convolution-broadcast-activations">5.1 Ordinary convolution: broadcast activations</h3>
+<p>Imagine a matrix with four rows (output pixels) and eight columns (output
+channels). Each cell is an accumulator. For one reduction term, the engine
+has four corrected activations and eight weights. Activation <code>a[p]</code> fans out
+to all eight columns; weight <code>w[c]</code> fans out to all four rows:</p>
+<pre><code class="language-text">sum[p,c] ← sum[p,c] + activation[p] × weight[c]
+</code></pre>
+<p>That is 32 products for each accepted term. Eight channel-specific weights are
+reused across four pixels, and a pixel's activation is reused across eight
+output channels. After all reduction terms, there are up to 32 independent
+32-bit sums, ready for per-channel requantization.</p>
+<h3 id="5-2-depthwise-independent-channel-activations">5.2 Depthwise: independent channel activations</h3>
+<p>The same physical multipliers support depthwise work, but activations no longer
+broadcast across channels. Each lane gets <code>activation[p,c]</code>; the eight weights
+still repeat across the four spatial positions. The wiring changes, not the
+number of multiplier lanes.</p>
+<p>For tail tiles, fewer than four pixels or eight channels may be real. The engine
+loads safe values for inactive lanes and suppresses their output writes. It
+must not let a spare lane overwrite an adjacent tensor. Odd output-channel
+counts and short final rows are important tests, not cosmetic corner cases.</p>
+<section class="demo"><h4>Explore a 4×8 tile</h4><p>Select a lane or change valid pixel/channel counts to see tail masking and operand sharing.</p><div class="fields"><label>Valid pixels<input id="tpixels" type="number" min="1" max="4" value="4"></label><label>Valid channels<input id="tchannels" type="number" min="1" max="8" value="8"></label><label>Operation<select id="tmode"><option value="regular">Regular convolution</option><option value="dw">Depthwise convolution</option></select></label></div><div class="tile"><button class="lane" id="lane0" aria-pressed="false">p0, c0</button><button class="lane" id="lane1" aria-pressed="false">p0, c1</button><button class="lane" id="lane2" aria-pressed="false">p0, c2</button><button class="lane" id="lane3" aria-pressed="false">p0, c3</button><button class="lane" id="lane4" aria-pressed="false">p0, c4</button><button class="lane" id="lane5" aria-pressed="false">p0, c5</button><button class="lane" id="lane6" aria-pressed="false">p0, c6</button><button class="lane" id="lane7" aria-pressed="false">p0, c7</button><button class="lane" id="lane8" aria-pressed="false">p1, c0</button><button class="lane" id="lane9" aria-pressed="false">p1, c1</button><button class="lane" id="lane10" aria-pressed="false">p1, c2</button><button class="lane" id="lane11" aria-pressed="false">p1, c3</button><button class="lane" id="lane12" aria-pressed="false">p1, c4</button><button class="lane" id="lane13" aria-pressed="false">p1, c5</button><button class="lane" id="lane14" aria-pressed="false">p1, c6</button><button class="lane" id="lane15" aria-pressed="false">p1, c7</button><button class="lane" id="lane16" aria-pressed="false">p2, c0</button><button class="lane" id="lane17" aria-pressed="false">p2, c1</button><button class="lane" id="lane18" aria-pressed="false">p2, c2</button><button class="lane" id="lane19" aria-pressed="false">p2, c3</button><button class="lane" id="lane20" aria-pressed="false">p2, c4</button><button class="lane" id="lane21" aria-pressed="false">p2, c5</button><button class="lane" id="lane22" aria-pressed="false">p2, c6</button><button class="lane" id="lane23" aria-pressed="false">p2, c7</button><button class="lane" id="lane24" aria-pressed="false">p3, c0</button><button class="lane" id="lane25" aria-pressed="false">p3, c1</button><button class="lane" id="lane26" aria-pressed="false">p3, c2</button><button class="lane" id="lane27" aria-pressed="false">p3, c3</button><button class="lane" id="lane28" aria-pressed="false">p3, c4</button><button class="lane" id="lane29" aria-pressed="false">p3, c5</button><button class="lane" id="lane30" aria-pressed="false">p3, c6</button><button class="lane" id="lane31" aria-pressed="false">p3, c7</button></div><output id="tout" aria-live="polite">32 independent output lanes. Regular convolution broadcasts a pixel activation across eight channels.</output></section>
+<h3 id="5-3-on-chip-banks-and-what-remains-resident">5.3 On-chip banks and what remains resident</h3>
+<p>Regular-convolution activation storage comprises four 1,024-entry banks of
+signed 9-bit values. Weight storage comprises eight 1,024-entry 8-bit banks.
+Depthwise activations use small 16-entry banks for each of the 32 lanes;
+a 3×3 kernel needs only nine entries.</p>
+<p>Weights and eight parameter records are loaded once per output-channel group
+and reused across all spatial tiles for that group. Activations are loaded per
+spatial tile. When the engine moves to the next group of eight output channels,
+it repeats the spatial traversal and activation loading. This is a crucial
+source of repeated traffic; the network weights are not magically all resident
+inside the arithmetic lanes.</p>
+<h3 id="5-4-vector-mac-ready-valid-and-accumulation">5.4 <code>vector_mac</code>: ready/valid and accumulation</h3>
+<p><code>vector_mac</code> registers the input activations and weights, registers products,
+then accumulates them into the 32 sums. <code>first</code> initializes a reduction; <code>last</code>
+marks its completion. Those markers advance alongside the values. A valid
+output corresponds to completed sums for the last term, not merely the latest
+product.</p>
+<p>The pipeline uses a global advance condition: <code>!out_valid || out_ready</code>. When
+the consumer blocks a valid output, products, accumulators and metadata hold
+still. Advancing only the data, or only <code>last</code>, would associate the wrong sum
+with a completion event. Reset clears pending valid state.</p>
+<p>Although the arithmetic block can accept a term on every advancing cycle, the
+production scheduler alternates <code>RUN_READ</code> and <code>RUN_FEED</code> to accommodate bank
+read timing. Its current feed interval is therefore <strong>two core cycles per
+term</strong>, even before the much larger load/store overhead.</p>
+<h2 id="6-requantization-as-an-eight-stage-circuit">6. Requantization as an eight-stage circuit</h2>
+<p>The 32 sums are serialized through one requantizer. That is a deliberate area
+tradeoff: there are not 32 copies of the 32-bit scaling multiplier.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align:right">Stage</th>
+<th>Registers / operation</th>
+<th>Reason for the boundary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">0</td>
+<td>Bias addition; capture multiplier and metadata</td>
+<td>Detect int32 overflow before scaling</td>
+</tr>
+<tr>
+<td style="text-align:right">1</td>
+<td>Four partial products</td>
+<td>Map into manageable DSP multipliers</td>
+</tr>
+<tr>
+<td style="text-align:right">2</td>
+<td>Two shifted partial-sum additions</td>
+<td>Keep carry chains bounded</td>
+</tr>
+<tr>
+<td style="text-align:right">3</td>
+<td>Recombine signed 64-bit product</td>
+<td>Register the wide result</td>
+</tr>
+<tr>
+<td style="text-align:right">4</td>
+<td>High multiply with its rounding bit</td>
+<td>Finish Q31 scaling</td>
+</tr>
+<tr>
+<td style="text-align:right">5</td>
+<td>Arithmetic shift and guard/sticky rounding flag</td>
+<td>Implement signed divide rounding</td>
+</tr>
+<tr>
+<td style="text-align:right">6</td>
+<td>Add rounding increment and output zero point</td>
+<td>Use a wider sum before narrowing</td>
+</tr>
+<tr>
+<td style="text-align:right">7</td>
+<td>Clamp; publish int8 and aligned error</td>
+<td>Prevent wraparound at the output</td>
+</tr>
+</tbody>
+</table></div>
+<p>The multiplier split uses 16-bit low/high portions. Low portions must be
+zero-extended; signed high portions must be sign-extended. Let <code>v = vl + vh×2¹⁶</code>
+and <code>M = ml + mh×2¹⁶</code>; then:</p>
+<pre><code class="language-text">v×M = vl×ml + (vh×ml + vl×mh)×2¹⁶ + vh×mh×2³²
+</code></pre>
+<p>The implementation groups that expression into two 48-bit sums and a final
+64-bit sum. Losing a shift or interpreting a low half as signed corrupts the
+result, often without producing an obvious overflow.</p>
+<p>The quantizer accepts one input each advancing cycle and holds all eight stages
+under backpressure. Zero/negative multipliers, reversed activation limits and
+bias overflow propagate an error bit and a zero result. Consumers must inspect
+valid and error together. The layer engine converts an arithmetic error to
+job status 4; it does not write a fabricated successful classification.</p>
+<h2 id="7-the-layer-scheduler-is-the-main-architecture">7. The layer scheduler is the main architecture</h2>
+<h3 id="7-1-the-high-level-sequence">7.1 The high-level sequence</h3>
+<ol>
+<li>Capture a descriptor and validate its supported dimensions and formats.</li>
+<li>Load eight output channels' weights and parameters.</li>
+<li>Generate coordinates for four output pixels.</li>
+<li>Load corrected activation terms into the appropriate banks.</li>
+<li>Feed all terms into the vector MAC and wait for completed sums.</li>
+<li>Send 32 sums through the quantizer and collect their outputs.</li>
+<li>Write only real pixel/channel outputs using byte strobes.</li>
+<li>Advance the spatial tile, or load the next group of channels, or finish.</li>
+</ol>
+<p><code>layer_engine.sv</code> encodes its 30 states as explicit one-hot bits. This keeps
+state decodes and bank enables shallow. It uses counters and pipelined address
+arithmetic rather than hardware division to convert a linear pixel index to
+coordinates on every access.</p>
+<figure><div class="flow"><span>Capture / validate</span><b>→</b><span>Load weights + parameters</span><b>→</b><span>Load four pixels</span><b>→</b><span>Read / feed MAC</span><b>→</b><span>Drain sums</span><b>→</b><span>Requantize 32 lanes</span><b>→</b><span>Write valid outputs</span><b>→</b><span>Next tile / group</span></div><figcaption>Figure 2. Repeated tile schedule. Loading, computing and writing are largely serialized; MREQ/MWAIT are shared substeps of the memory phases.</figcaption></figure>
+<h3 id="7-2-map-the-conceptual-sequence-to-actual-states">7.2 Map the conceptual sequence to actual states</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>State group</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IDLE, CHECK</td>
+<td>Accept one descriptor, capture dimensions, reject unsupported jobs</td>
+</tr>
+<tr>
+<td>W_ADDR, W_NEXT</td>
+<td>Walk weights for one eight-channel group</td>
+</tr>
+<tr>
+<td>P_ADDR, P_NEXT</td>
+<td>Fetch bias, multiplier and shift for those channels</td>
+</tr>
+<tr>
+<td>PIX_INIT, PIX_NEXT</td>
+<td>Capture four pixel origins and advance row/column counters</td>
+</tr>
+<tr>
+<td>A_SELECT … A_ADDR, A_NEXT</td>
+<td>Walk kernel/input coordinates, handle padding, load banks</td>
+</tr>
+<tr>
+<td>RUN_READ, RUN_FEED, SUM_WAIT</td>
+<td>Read banks, feed MAC terms, wait for sums</td>
+</tr>
+<tr>
+<td>Q_SEND, Q_WAIT</td>
+<td>Serialize 32 sums and wait for 32 quantized results</td>
+</tr>
+<tr>
+<td>O_ADDR, O_NEXT, NEXT_TILE</td>
+<td>Store valid lanes and choose the next tile/group</td>
+</tr>
+<tr>
+<td>MULTIPLY, OFFSET, ADDRESS, CHECK_REQ</td>
+<td>Shared pipelined address generation</td>
+</tr>
+<tr>
+<td>MREQ, MWAIT</td>
+<td>Offer a memory request and wait for its response</td>
+</tr>
+<tr>
+<td>FINISH</td>
+<td>Hold completion until acknowledgement</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="7-3-address-checks-and-overflow">7.3 Address checks and overflow</h3>
+<p>Each memory request is checked against a configured half-open DDR region
+<code>[region_base, region_limit)</code>. Region boundaries and parameter records are
+aligned; the last legal word starts at <code>region_limit−4</code>. A 33-bit request
+address catches carry out of a base-plus-offset calculation. Intermediate
+multiplication overflow is also rejected.</p>
+<p>Supported image dimensions are nonzero and at most 256 in each spatial axis;
+channel counts are at most 1,024. Kernel is 1 or 3, stride is 1 or 2, and the
+reduction length must fit the 1,024-term banks. Depthwise requires equal input
+and output channel counts. Valid arithmetic cannot compensate for a descriptor
+that addresses the wrong region; check both classes of conditions.</p>
+<h3 id="7-4-why-this-schedule-is-slow">7.4 Why this schedule is slow</h3>
+<p>Loading, computing, quantizing and writing are mostly sequential. The MAC array
+waits while activation words are fetched through several address states and a
+single-outstanding memory interface. Outputs are written as individual bytes,
+each with transaction machinery, rather than aggregated into long contiguous
+writes. A small cache helps repeated reads but does not overlap misses.</p>
+<p>At 166.667 MHz, 32 products every cycle would suggest 5.333 billion MAC/s, or
+about 106.4 ms for 567.7 million MACs. That is an <strong>arithmetic-only ceiling</strong>.
+The current two-cycle feed interval lowers even the feed-only ceiling to
+2.667 billion MAC/s, or about 212.9 ms. Both calculations exclude all loads,
+stores, tail-lane waste, quantization and control.</p>
+<p>The full graph's recorded testbench execution is about 1.184 billion core cycles,
+roughly 7.10 seconds at the target frequency under that testbench's memory delays.
+It is a simulation-derived estimate, not a measured clock-to-clock hardware
+inference duration. Do not compare it directly with the ideal 106 ms figure
+and conclude a specific DDR bandwidth without measuring state occupancy.</p>
+<section class="demo"><h4>Arithmetic ceiling versus useful duty factor</h4><p>A thought experiment for 567,718,400 MACs. The accepted frequency is 166.667 MHz; changing the field does not establish timing closure at another frequency.</p><div class="fields"><label>Core frequency (MHz)<input id="pfreq" type="number" min="1" max="500" value="166.667" step="0.001"></label><label>Cycles per accepted term<select id="pinterval"><option value="2">2 — current bank schedule</option><option value="1">1 — hypothetical continuous feed</option></select></label><label>Assumed feed duty (%)<input id="pduty" type="number" min="0.1" max="100" value="100" step="0.1"></label></div><output id="pout" aria-live="polite">At 166.667 MHz and two cycles/term, the feed-only arithmetic estimate is about 212.9 ms, excluding memory and control overhead.</output></section>
+<h2 id="8-from-the-internal-memory-port-to-axi">8. From the internal memory port to AXI</h2>
+<h3 id="8-1-a-small-internal-request-interface">8.1 A small internal request interface</h3>
+<p>The layer engine submits an aligned 32-bit address, data word and four write
+strobes. A zero strobe denotes a read. <code>req_valid/req_ready</code> accepts a request;
+<code>rsp_valid/rsp_ready</code> retires its response. Only one request is active. This
+simple abstraction keeps AXI burst and channel details out of the layer FSM.</p>
+<p>For an output byte, data is shifted to its position in the aligned word and a
+single byte strobe is asserted. <code>axi_memory</code> then selects the appropriate half
+of its aligned 64-bit write beat using address bit 2. Both alignment steps must
+agree; otherwise the right value can be written into the wrong neighbor byte.</p>
+<h3 id="8-2-the-128-byte-read-cache">8.2 The 128-byte read cache</h3>
+<p>Read addresses select a 16-byte-aligned line. Address bits <code>[6:4]</code> select one
+of eight entries; bits <code>[31:7]</code> are the tag; bits <code>[3:2]</code> select the requested
+32-bit word inside the line.</p>
+<p>A miss issues a two-beat 64-bit INCR read burst, starting at a 16-byte boundary.
+Such a burst never crosses a 4 KiB boundary. Both beats are collected before a
+line becomes valid. A response error or malformed <code>RLAST</code> must not populate
+the cache with partially trusted data.</p>
+<p>A write invalidates a matching cached line. Starting a new job invalidates the
+cache so a new tensor or descriptor does not observe stale data. This is a
+small direct-mapped cache, not a coherent shared cache or a full tensor buffer.
+Two hot lines mapping to the same index can continually evict one another.</p>
+<h3 id="8-3-independent-axi-write-channels">8.3 Independent AXI write channels</h3>
+<p>AXI's write address and write data channels may handshake on different cycles.
+The memory block tracks <code>aw_sent</code> and <code>w_sent</code> independently. It does not assume
+that <code>AWREADY</code> and <code>WREADY</code> arrive together, and it holds payload stable while
+a valid channel is blocked. Completion occurs after the write response <code>B</code>,
+not when the data beat is merely offered.</p>
+<p>The testbench deliberately changes channel ordering and backpressure. An
+always-ready memory model would miss many bugs in a seemingly simple master.</p>
+<h3 id="8-4-timeouts-do-not-erase-outstanding-traffic">8.4 Timeouts do not erase outstanding traffic</h3>
+<p>The memory block's watchdog defaults to 100,000,000 cycles. If a transaction
+exceeds that bound, <code>fatal</code> latches, but the block keeps draining the outstanding
+transaction. Dropping <code>VALID</code>, abandoning a read burst or reusing memory early
+would leave another part of the fabric with an accepted request and no matching
+lifetime owner.</p>
+<p>Malformed burst termination also latches fatal. A fatal interface cannot accept
+new work; recovery requires a coordinated fabric reset. A local reset of only
+one active master is not a safe substitute for completing or resetting all
+participants in that transaction.</p>
+<h2 id="9-axi-lite-control-and-layer-descriptors">9. AXI-Lite control and layer descriptors</h2>
+<p>The integration assigns a 4 KiB AXI-Lite window at <strong>0x43C00000</strong>. The core uses
+12-bit offsets. Reads and writes must be word aligned. Unsupported accesses
+return an AXI slave error. Address and data for writes are captured independently.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align:right">Offset</th>
+<th>Read meaning / configuration</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">0x00</td>
+<td>Flags: bit 0 busy, bit 1 completion valid, bit 2 fatal</td>
+</tr>
+<tr>
+<td style="text-align:right">0x04</td>
+<td>Identity <code>0x49414331</code></td>
+</tr>
+<tr>
+<td style="text-align:right">0x08</td>
+<td>Completed job ID</td>
+</tr>
+<tr>
+<td style="text-align:right">0x0C</td>
+<td>Job result status</td>
+</tr>
+<tr>
+<td style="text-align:right">0x10</td>
+<td>Busy-cycle counter</td>
+</tr>
+<tr>
+<td style="text-align:right">0x14</td>
+<td>Internal read-request count</td>
+</tr>
+<tr>
+<td style="text-align:right">0x18</td>
+<td>Internal write-request count</td>
+</tr>
+<tr>
+<td style="text-align:right">0x20</td>
+<td>Job ID</td>
+</tr>
+<tr>
+<td style="text-align:right">0x24 / 0x28 / 0x2C / 0x30</td>
+<td>Input / weights / parameters / output addresses</td>
+</tr>
+<tr>
+<td style="text-align:right">0x34 / 0x38</td>
+<td>Authorized region base / exclusive limit</td>
+</tr>
+<tr>
+<td style="text-align:right">0x3C</td>
+<td>Input height bits 15:0; input width bits 31:16</td>
+</tr>
+<tr>
+<td style="text-align:right">0x40</td>
+<td>Input channels bits 15:0; output height bits 31:16</td>
+</tr>
+<tr>
+<td style="text-align:right">0x44</td>
+<td>Output width bits 15:0; output channels bits 31:16</td>
+</tr>
+<tr>
+<td style="text-align:right">0x48</td>
+<td>Kernel [1:0], stride [3:2], top pad [5:4], left pad [7:6], depthwise [8]</td>
+</tr>
+<tr>
+<td style="text-align:right">0x4C</td>
+<td>Input zero, output zero, activation min, activation max: four signed bytes</td>
+</tr>
+</tbody>
+</table></div>
+<p>Writing exact command value <strong>1</strong> to offset 0 starts an idle job; <strong>2</strong> requests
+cancellation while busy; <strong>4</strong> acknowledges a valid completion. These are not
+freely combinable command bits. Configuration writes honor byte strobes but are
+rejected while a job is active, completion is pending, a start is pending, or
+the memory interface is fatal.</p>
+<p>Statuses are 0 success, 1 invalid descriptor/address/parameter, 2 memory error,
+3 cancelled and 4 arithmetic error. The completion ID tells the controller
+which job ended. It remains stable with completion until acknowledged. Reading
+a previous completion and mistaking it for a newly started job is a classic
+race; explicit ID and acknowledgement semantics prevent it.</p>
+<p>The cycle counter counts core cycles while busy. The read/write counters count
+accepted requests at the internal port; <strong>they do not directly count DDR bytes
+or cache misses</strong>. A cache hit still belongs to an internal read request.</p>
+<h2 id="10-cancellation-and-reset-behavior">10. Cancellation and reset behavior</h2>
+<p>Cancellation first latches <code>aborting</code>. The engine stops at a boundary where it
+is not withdrawing an offered request or abandoning an accepted one. In <code>MREQ</code>
+and <code>MWAIT</code>, it continues until the memory handshake/response resolves. At the
+next safe state it publishes status 3 and waits in FINISH for acknowledgement.</p>
+<p>A cancelled output buffer may contain partially written data; cancellation does
+not roll back DDR contents. The useful guarantee is that completion is published
+after the accepted traffic drains, so a controller can then safely reuse the
+buffer. Arithmetic pipeline valid bits clear on the appropriate core reset.</p>
+<p>Distinguish three cases: normal completion, drained cancellation and fatal bus
+failure. They require different recovery actions. Reporting all three as a
+successful “stop” would conceal an unsafe memory lifetime.</p>
+<h2 id="11-clock-domains-and-physical-implementation">11. Clock domains and physical implementation</h2>
+<p><code>fpga/build_soc.tcl</code> instantiates the processing-system DDR interfaces, AXI-Lite
+control and SmartConnect bridges. The control GP0 and 64-bit HP0 interfaces run
+at 100 MHz. The accelerator runs from FCLK1 at 166.667 MHz. Two-clock
+SmartConnect instances perform the data crossings. Reset synchronizers exist
+for the bus and core domains; the external reset polarity is active low.</p>
+<p>There is no custom asynchronous datapath between the two domains. That does not
+eliminate the need to review vendor CDC reports, generated clocks and reset
+behavior. The source adds no ad hoc false-path exceptions to hide failing paths.</p>
+<p>Accepted routed timing is +0.172 ns setup slack, +0.028 ns hold slack and
++1.750 ns pulse-width slack. Unconstrained endpoint and missing-delay checks are
+zero. Thirteen bus-skew constraints passed in the accepted implementation.
+The report includes reviewed CDC and DRC warnings; it is not warning-free.
+A 200 MHz candidate did not meet timing. “166.667 MHz passed” does not establish
+the absolute maximum achievable frequency under every placement or redesign.</p>
+<p>Reports in <a href="evidence/">evidence</a> are snapshots of the accepted implementation.
+This package includes source and reports, not generated programming containers.
+Create a new output directory for your build and repeat all acceptance gates.</p>
+<h2 id="12-a-synthesis-bug-that-rtl-simulation-did-not-catch">12. A synthesis bug that RTL simulation did not catch</h2>
+<p>The first complete implementation returned wrong values on physical hardware
+even though RTL arithmetic tests had passed. The first convolution already
+differed; the faulty result pattern matched truncation behavior in the scaled
+accumulator path. The investigation moved backward from class scores to tensor
+hashes, then to isolated arithmetic cases.</p>
+<p>Vivado 2025.1 had folded shifted partial-product additions into unshifted DSP
+cascade connections. The symbolic source expression was correct, but the
+inferred implementation of that expression was not numerically equivalent.
+The fix keeps the two 48-bit partial recombination registers in fabric:</p>
+<pre><code class="language-systemverilog">(* use_dsp=&quot;no&quot; *) logic signed [47:0] left2, right2;
+</code></pre>
+<p>The four product multipliers remain mapped to DSPs. The same 40,815-case suite
+then passed both RTL and the synthesized functional netlist, followed by full
+hardware tensor checks. This is why the post-synthesis regression is a required
+step rather than an optional visualization exercise.</p>
+<p>Do not overgeneralize this observation to every DSP cascade. It is a concrete
+synthesis result for this expression, tool version and implementation. Preserve
+the reproducer and numerical checks whenever changing the decomposition.</p>
+<h2 id="13-verification-ladder-and-what-each-rung-proves">13. Verification ladder and what each rung proves</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Rung</th>
+<th>Evidence</th>
+<th>Does not establish</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Independent arithmetic oracle</td>
+<td>40,815 requantizer cases; signed/tie/error boundaries</td>
+<td>Complete address generation</td>
+</tr>
+<tr>
+<td>RTL arithmetic</td>
+<td>Backpressure, reset, ordered valid/error, repeated tiles</td>
+<td>Synthesis equivalence</td>
+</tr>
+<tr>
+<td>Synthesized arithmetic</td>
+<td>Same oracle through mapped functional netlist</td>
+<td>Routed timing or external memory behavior</td>
+</tr>
+<tr>
+<td>Layer simulation</td>
+<td>Real operands and awkward dimensions; exact bytes</td>
+<td>Whole graph composition</td>
+</tr>
+<tr>
+<td>AXI/CSR simulation</td>
+<td>Independent channels, strobes, faults, cancellation, recovery</td>
+<td>Real DDR latency</td>
+</tr>
+<tr>
+<td>Full graph simulation</td>
+<td>Chained RTL conv outputs with numerical scaffold</td>
+<td>All operators implemented in RTL</td>
+</tr>
+<tr>
+<td>Routed implementation</td>
+<td>Clock constraints, setup/hold/pulse, CDC/DRC review</td>
+<td>Numerical correctness by itself</td>
+</tr>
+<tr>
+<td>Physical numerical checks</td>
+<td>Seven inputs × 37 exact intermediate tensors</td>
+<td>Generalization to unseen data or a throughput promise</td>
+</tr>
+</tbody>
+</table></div>
+<p>The seven inputs comprise four prepared example images plus all-zero, all-255
+and seeded-random RGB. Non-saturated synthetic results are valuable: black
+produces <code>[226,30]</code>, white <code>[249,7]</code>, random <code>[153,103]</code> in the frozen reference.
+A saturated <code>[0,255]</code> result can hide internal errors. Comparing all tensor
+hashes localizes the first divergence instead of arguing over final labels.</p>
+<p><code>tb/top_runner.hpp</code> models memory and control handshakes with randomized delays,
+checks stable payload under backpressure, injects read/write errors, and exercises
+cancellation followed by a fresh job. Shape fixtures include odd channels,
+partial spatial tiles, extreme zero points, padding and the 1,024-term boundary.</p>
+<h2 id="14-the-complete-operator-inventory">14. The complete operator inventory</h2>
+<p>The table below is generated from the included frozen model specification.
+Shapes include batch dimension one. MAC totals count a multiplication followed
+by accumulation as one MAC, not two operations. “Scaffold” means a numerical
+operation in graph simulation rather than a fabric block.</p>
+<div class="filter-row">Filter the operator inventory <input id="layer-search" placeholder="e.g. DEPTHWISE, RTL, 512" aria-label="Filter operators"></div><div class="table-scroll" id="layer-table"><table>
+<thead>
+<tr>
+<th style="text-align:right">Index</th>
+<th>Operator</th>
+<th>Input shape</th>
+<th>Output shape</th>
+<th>Execution</th>
+<th style="text-align:right">MACs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">0</td>
+<td>QUANTIZE</td>
+<td>1×224×224×3</td>
+<td>1×224×224×3</td>
+<td>Scaffold</td>
+<td style="text-align:right">0</td>
+</tr>
+<tr>
+<td style="text-align:right">1</td>
+<td>CONV_2D</td>
+<td>1×224×224×3</td>
+<td>1×112×112×32</td>
+<td>RTL</td>
+<td style="text-align:right">10,838,016</td>
+</tr>
+<tr>
+<td style="text-align:right">2</td>
+<td>DEPTHWISE_CONV_2D</td>
+<td>1×112×112×32</td>
+<td>1×112×112×32</td>
+<td>RTL</td>
+<td style="text-align:right">3,612,672</td>
+</tr>
+<tr>
+<td style="text-align:right">3</td>
+<td>CONV_2D</td>
+<td>1×112×112×32</td>
+<td>1×112×112×64</td>
+<td>RTL</td>
+<td style="text-align:right">25,690,112</td>
+</tr>
+<tr>
+<td style="text-align:right">4</td>
+<td>PAD</td>
+<td>1×112×112×64</td>
+<td>1×113×113×64</td>
+<td>Scaffold</td>
+<td style="text-align:right">0</td>
+</tr>
+<tr>
+<td style="text-align:right">5</td>
+<td>DEPTHWISE_CONV_2D</td>
+<td>1×113×113×64</td>
+<td>1×56×56×64</td>
+<td>RTL</td>
+<td style="text-align:right">1,806,336</td>
+</tr>
+<tr>
+<td style="text-align:right">6</td>
+<td>CONV_2D</td>
+<td>1×56×56×64</td>
+<td>1×56×56×128</td>
+<td>RTL</td>
+<td style="text-align:right">25,690,112</td>
+</tr>
+<tr>
+<td style="text-align:right">7</td>
+<td>DEPTHWISE_CONV_2D</td>
+<td>1×56×56×128</td>
+<td>1×56×56×128</td>
+<td>RTL</td>
+<td style="text-align:right">3,612,672</td>
+</tr>
+<tr>
+<td style="text-align:right">8</td>
+<td>CONV_2D</td>
+<td>1×56×56×128</td>
+<td>1×56×56×128</td>
+<td>RTL</td>
+<td style="text-align:right">51,380,224</td>
+</tr>
+<tr>
+<td style="text-align:right">9</td>
+<td>PAD</td>
+<td>1×56×56×128</td>
+<td>1×57×57×128</td>
+<td>Scaffold</td>
+<td style="text-align:right">0</td>
+</tr>
+<tr>
+<td style="text-align:right">10</td>
+<td>DEPTHWISE_CONV_2D</td>
+<td>1×57×57×128</td>
+<td>1×28×28×128</td>
+<td>RTL</td>
+<td style="text-align:right">903,168</td>
+</tr>
+<tr>
+<td style="text-align:right">11</td>
+<td>CONV_2D</td>
+<td>1×28×28×128</td>
+<td>1×28×28×256</td>
+<td>RTL</td>
+<td style="text-align:right">25,690,112</td>
+</tr>
+<tr>
+<td style="text-align:right">12</td>
+<td>DEPTHWISE_CONV_2D</td>
+<td>1×28×28×256</td>
+<td>1×28×28×256</td>
+<td>RTL</td>
+<td style="text-align:right">1,806,336</td>
+</tr>
+<tr>
+<td style="text-align:right">13</td>
+<td>CONV_2D</td>
+<td>1×28×28×256</td>
+<td>1×28×28×256</td>
+<td>RTL</td>
+<td style="text-align:right">51,380,224</td>
+</tr>
+<tr>
+<td style="text-align:right">14</td>
+<td>PAD</td>
+<td>1×28×28×256</td>
+<td>1×29×29×256</td>
+<td>Scaffold</td>
+<td style="text-align:right">0</td>
+</tr>
+<tr>
+<td style="text-align:right">15</td>
+<td>DEPTHWISE_CONV_2D</td>
+<td>1×29×29×256</td>
+<td>1×14×14×256</td>
+<td>RTL</td>
+<td style="text-align:right">451,584</td>
+</tr>
+<tr>
+<td style="text-align:right">16</td>
+<td>CONV_2D</td>
+<td>1×14×14×256</td>
+<td>1×14×14×512</td>
+<td>RTL</td>
+<td style="text-align:right">25,690,112</td>
+</tr>
+<tr>
+<td style="text-align:right">17</td>
+<td>DEPTHWISE_CONV_2D</td>
+<td>1×14×14×512</td>
+<td>1×14×14×512</td>
+<td>RTL</td>
+<td style="text-align:right">903,168</td>
+</tr>
+<tr>
+<td style="text-align:right">18</td>
+<td>CONV_2D</td>
+<td>1×14×14×512</td>
+<td>1×14×14×512</td>
+<td>RTL</td>
+<td style="text-align:right">51,380,224</td>
+</tr>
+<tr>
+<td style="text-align:right">19</td>
+<td>DEPTHWISE_CONV_2D</td>
+<td>1×14×14×512</td>
+<td>1×14×14×512</td>
+<td>RTL</td>
+<td style="text-align:right">903,168</td>
+</tr>
+<tr>
+<td style="text-align:right">20</td>
+<td>CONV_2D</td>
+<td>1×14×14×512</td>
+<td>1×14×14×512</td>
+<td>RTL</td>
+<td style="text-align:right">51,380,224</td>
+</tr>
+<tr>
+<td style="text-align:right">21</td>
+<td>DEPTHWISE_CONV_2D</td>
+<td>1×14×14×512</td>
+<td>1×14×14×512</td>
+<td>RTL</td>
+<td style="text-align:right">903,168</td>
+</tr>
+<tr>
+<td style="text-align:right">22</td>
+<td>CONV_2D</td>
+<td>1×14×14×512</td>
+<td>1×14×14×512</td>
+<td>RTL</td>
+<td style="text-align:right">51,380,224</td>
+</tr>
+<tr>
+<td style="text-align:right">23</td>
+<td>DEPTHWISE_CONV_2D</td>
+<td>1×14×14×512</td>
+<td>1×14×14×512</td>
+<td>RTL</td>
+<td style="text-align:right">903,168</td>
+</tr>
+<tr>
+<td style="text-align:right">24</td>
+<td>CONV_2D</td>
+<td>1×14×14×512</td>
+<td>1×14×14×512</td>
+<td>RTL</td>
+<td style="text-align:right">51,380,224</td>
+</tr>
+<tr>
+<td style="text-align:right">25</td>
+<td>DEPTHWISE_CONV_2D</td>
+<td>1×14×14×512</td>
+<td>1×14×14×512</td>
+<td>RTL</td>
+<td style="text-align:right">903,168</td>
+</tr>
+<tr>
+<td style="text-align:right">26</td>
+<td>CONV_2D</td>
+<td>1×14×14×512</td>
+<td>1×14×14×512</td>
+<td>RTL</td>
+<td style="text-align:right">51,380,224</td>
+</tr>
+<tr>
+<td style="text-align:right">27</td>
+<td>PAD</td>
+<td>1×14×14×512</td>
+<td>1×15×15×512</td>
+<td>Scaffold</td>
+<td style="text-align:right">0</td>
+</tr>
+<tr>
+<td style="text-align:right">28</td>
+<td>DEPTHWISE_CONV_2D</td>
+<td>1×15×15×512</td>
+<td>1×7×7×512</td>
+<td>RTL</td>
+<td style="text-align:right">225,792</td>
+</tr>
+<tr>
+<td style="text-align:right">29</td>
+<td>CONV_2D</td>
+<td>1×7×7×512</td>
+<td>1×7×7×1024</td>
+<td>RTL</td>
+<td style="text-align:right">25,690,112</td>
+</tr>
+<tr>
+<td style="text-align:right">30</td>
+<td>DEPTHWISE_CONV_2D</td>
+<td>1×7×7×1024</td>
+<td>1×7×7×1024</td>
+<td>RTL</td>
+<td style="text-align:right">451,584</td>
+</tr>
+<tr>
+<td style="text-align:right">31</td>
+<td>CONV_2D</td>
+<td>1×7×7×1024</td>
+<td>1×7×7×1024</td>
+<td>RTL</td>
+<td style="text-align:right">51,380,224</td>
+</tr>
+<tr>
+<td style="text-align:right">32</td>
+<td>MEAN</td>
+<td>1×7×7×1024</td>
+<td>1×1×1×1024</td>
+<td>Scaffold</td>
+<td style="text-align:right">0</td>
+</tr>
+<tr>
+<td style="text-align:right">33</td>
+<td>CONV_2D</td>
+<td>1×1×1×1024</td>
+<td>1×1×1×2</td>
+<td>RTL</td>
+<td style="text-align:right">2,048</td>
+</tr>
+<tr>
+<td style="text-align:right">34</td>
+<td>RESHAPE</td>
+<td>1×1×1×2</td>
+<td>1×2</td>
+<td>Scaffold</td>
+<td style="text-align:right">0</td>
+</tr>
+<tr>
+<td style="text-align:right">35</td>
+<td>SOFTMAX</td>
+<td>1×2</td>
+<td>1×2</td>
+<td>Scaffold</td>
+<td style="text-align:right">0</td>
+</tr>
+<tr>
+<td style="text-align:right">36</td>
+<td>QUANTIZE</td>
+<td>1×2</td>
+<td>1×2</td>
+<td>Scaffold</td>
+<td style="text-align:right">0</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="15-where-to-optimize-next">15. Where to optimize next</h2>
+<p>Start with counters that classify cycles: weight loading, activation loading,
+cache hits/misses, stalled AXI, MAC feed, quantizer drain and output writes.
+The existing total/request counters are useful but insufficient to assign a
+precise fraction of time to DDR latency versus address-state overhead.</p>
+<p>Potential experiments, each requiring renewed numerical and timing checks:</p>
+<ol>
+<li><strong>Widen useful work per access.</strong> Consume all relevant bytes from a fetched
+word instead of repeatedly entering the request FSM for neighboring bytes.</li>
+<li><strong>Aggregate output writes.</strong> Pack adjacent valid channels into aligned words
+or bursts, retaining exact strobes for tail channels and row boundaries.</li>
+<li><strong>Double-buffer tiles.</strong> Load the next tile while the current one computes;
+track which bank owns each outstanding operation, including cancellation.</li>
+<li><strong>Increase outstanding reads.</strong> Add transaction tracking and response routing;
+the complexity moves into ordering, bounds, timeout and drain handling.</li>
+<li><strong>Change loop ordering.</strong> Reuse activation tiles across channel groups, subject
+to on-chip capacity and weight traffic. Measure the tradeoff rather than
+assuming one reuse strategy wins for every layer.</li>
+<li><strong>Improve bank feeding.</strong> Pipeline synchronous reads to feed one term per cycle.
+Confirm <code>first/last</code>, tile tags and the final sum remain aligned.</li>
+</ol>
+<p>Higher clock or more multipliers alone will not fix a design whose arithmetic
+waits most of the time. Conversely, an efficient memory schedule can increase
+useful MAC utilization without increasing the multiplier count.</p>
+<h2 id="16-study-exercises">16. Study exercises</h2>
+<ol>
+<li>Compute the NHWC byte offset for pixel <code>(3,5)</code>, channel 7 in a <code>[14,14,512]</code>
+tensor. Answer: <code>(3×14+5)×512+7 = 24,071</code>.</li>
+<li>For a pointwise <code>[14,14,512]→[14,14,512]</code> layer, derive 51,380,224 MACs.
+How many times are activations reloaded if you process eight output channels
+per group? There are 64 groups in the current loop ordering.</li>
+<li>Explain why a padded input sample must use the input zero point, not integer
+zero, before correction.</li>
+<li>Trace one byte output through word alignment, strobe shift and the 64-bit bus.</li>
+<li>Find the last accepted memory request when cancellation arrives in MWAIT.
+Which state first has permission to publish the cancelled completion?</li>
+<li>Propose a test that detects invalid cached data after a read-response error.</li>
+<li>Remove the arithmetic-only idealization from a MAC throughput calculation.
+Which cycle categories and lane masks must you measure?</li>
+<li>Explain why passing timing and passing RTL simulation are independent claims.</li>
+</ol>
+<h2 id="17-glossary-and-suggested-reading-order">17. Glossary and suggested reading order</h2>
+<p><strong>MAC:</strong> multiply-accumulate. <strong>Depthwise:</strong> spatial filtering without channel
+mixing. <strong>Pointwise:</strong> 1×1 channel mixing. <strong>NHWC/OHWI:</strong> tensor/weight memory
+orders. <strong>Zero point:</strong> integer representing real zero. <strong>Q31:</strong> fixed-point
+multiplier scaled by 2³¹. <strong>Requantization:</strong> converting an accumulated value
+into the next tensor's integer scale. <strong>DSP:</strong> dedicated multiplier/accumulator
+resource. <strong>BRAM:</strong> dedicated on-chip memory. <strong>AXI-Lite:</strong> memory-mapped control
+interface. <strong>AXI4 burst:</strong> a sequence of data beats associated with one address.
+<strong>Backpressure:</strong> a receiver delaying acceptance. <strong>CDC:</strong> clock-domain crossing.
+<strong>Slack:</strong> timing margin against a constraint. <strong>One-hot FSM:</strong> one state bit
+active at a time. <strong>Oracle:</strong> independently generated expected numerical result.</p>
+<p>For a first code pass: <code>vector_mac</code> → <code>requantize</code> → <code>layer_engine</code> → <code>axi_memory</code>
+→ <code>accelerator_top</code>. For a verification pass: arithmetic testbench → shape
+fixtures → <code>top_runner.hpp</code> → graph comparison → timing reports. The practical
+commands are in <a href="GUIDE.md">GUIDE.md</a>.</p>
+<footer>Self-contained reading edition. No network access, remote fonts or external scripts are required. Regenerate with docs/render_guide.py after editing DESIGN.md.</footer></main><script>'use strict';
+const $=id=>document.getElementById(id);
+function calculateQuant(v,b,m,s,z,lo,hi){
+ const min=-(1n<<31n),max=(1n<<31n)-1n;
+ if(v<min||v>max||b<min||b>max)throw Error('Accumulator and bias must each fit signed int32.');
+ if(m<=0n||m>max)throw Error('Multiplier must be positive signed Q31 (1…2147483647).');
+ if(s<0n||s>31n)throw Error('Right shift must be 0…31.');
+ if(z< -128n||z>127n||lo< -128n||hi>127n||lo>hi)throw Error('Zero point and ordered clamp interval must fit signed int8.');
+ const biased=v+b;if(biased<min||biased>max)throw Error('Bias addition overflows int32: RTL reports an error.');
+ const product=biased*m, high=(product+(1n<<30n))>>31n,mask=(1n<<s)-1n;
+ const base=high>>s,rem=high&mask,threshold=(mask>>1n)+(high<0n?1n:0n),round=rem>threshold?1n:0n;
+ const shifted=base+round,offset=shifted+z,result=offset<lo?lo:offset>hi?hi:offset;
+ return {biased,product,high,base,rem,threshold,round,shifted,offset,result};
+}
+function showQuant(){try{const r=calculateQuant(...['qacc','qbias','qmult','qshift','qzero','qlo','qhi'].map(id=>BigInt($(id).value)));$('qout').textContent=`biased = ${r.biased}\nproduct = ${r.product}\nhigh Q31 result = ${r.high}\nshift base = ${r.base}; remainder = ${r.rem}; threshold = ${r.threshold}\nround increment = ${r.round}; scaled = ${r.shifted}\nafter zero point = ${r.offset}; clamped int8 = ${r.result}`;}catch(e){$('qout').textContent=e.message;}}
+let selectedLane=0;
+function showTile(){const pixels=Number($('tpixels').value),channels=Number($('tchannels').value),dw=$('tmode').value==='dw';
+ if(!Number.isInteger(pixels)||pixels<1||pixels>4||!Number.isInteger(channels)||channels<1||channels>8){$('tout').textContent='Enter 1–4 pixels and 1–8 channels.';return;}
+ for(let i=0;i<32;i++){const p=Math.floor(i/8),c=i%8,live=p<pixels&&c<channels,el=$('lane'+i);el.className='lane'+(live?'':' off')+(i===selectedLane?' selected':'');el.textContent=`p${p}, c${c}\n${live?'MAC':'masked'}`;el.setAttribute('aria-pressed',i===selectedLane?'true':'false');}
+ const p=Math.floor(selectedLane/8),c=selectedLane%8;
+ $('tout').textContent=`${pixels*channels}/32 useful output lanes (${(pixels*channels/32*100).toFixed(1)}% tile occupancy)\nSelected p${p},c${c}: sum[${p},${c}] += ${dw?`activation[${p},${c}]`:`activation[${p}]`} × weight[${c}]\n${p>=pixels||c>=channels?'Tail lane: output write suppressed.':dw?'Depthwise: each channel uses its own activation.':'Regular convolution: this activation is shared across eight channels.'}`;
+}
+function showPerf(){const mhz=Number($('pfreq').value),interval=Number($('pinterval').value),duty=Number($('pduty').value);if(!Number.isFinite(mhz)||mhz<=0||![1,2].includes(interval)||!Number.isFinite(duty)||duty<=0||duty>100){$('pout').textContent='Enter a positive frequency, feed interval 1 or 2, and duty factor above 0 through 100%.';return;}const rate=32*mhz*1e6/interval*duty/100,seconds=567718400/rate;$('pout').textContent=`Assumed useful rate: ${(rate/1e9).toFixed(3)} GMAC/s\nArithmetic-work estimate: ${(seconds*1000).toFixed(1)} ms/image\nAssumes full lanes during feed; duty factor is an input, not a measured utilization.\nThis does not model DDR queueing, quantizer drain, tail tiles or a new timing result.`;}
+document.addEventListener('DOMContentLoaded',()=>{
+ for(const id of ['qacc','qbias','qmult','qshift','qzero','qlo','qhi'])$(id).addEventListener('input',showQuant);
+ $('qtie').addEventListener('click',()=>{$('qacc').value=-3;$('qbias').value=0;$('qmult').value=1073741824;$('qshift').value=1;$('qzero').value=0;showQuant();});
+ $('qreset').addEventListener('click',()=>{const vals=[125,3,1073741824,2,-5,-128,127];['qacc','qbias','qmult','qshift','qzero','qlo','qhi'].forEach((id,i)=>$(id).value=vals[i]);showQuant();});
+ for(const id of ['tpixels','tchannels','tmode'])$(id).addEventListener('input',showTile);
+ for(let i=0;i<32;i++)$('lane'+i).addEventListener('click',()=>{selectedLane=i;showTile();});
+ for(const id of ['pfreq','pinterval','pduty'])$(id).addEventListener('input',showPerf);
+ $('toc-search').addEventListener('input',()=>{const q=$('toc-search').value.toLowerCase();document.querySelectorAll('nav .toc a').forEach(a=>a.hidden=!a.textContent.toLowerCase().includes(q));});
+ $('layer-search').addEventListener('input',()=>{const q=$('layer-search').value.toLowerCase();document.querySelectorAll('#layer-table tbody tr').forEach(row=>row.hidden=!row.textContent.toLowerCase().includes(q));});
+ $('print').addEventListener('click',()=>window.print());
+ window.addEventListener('scroll',()=>{const h=document.documentElement;const ratio=h.scrollHeight>innerHeight?h.scrollTop/(h.scrollHeight-innerHeight):0;$('progress').style.width=`${ratio*(innerWidth-parseFloat(getComputedStyle($('progress')).left))}px`;},{passive:true});
+ showQuant();showTile();showPerf();
+});
+</script></body></html>
