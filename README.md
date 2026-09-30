@@ -19,6 +19,8 @@ golden/                   numerical specifications, vectors and expected tensor 
 model/                    portable reference model and derived layer inventory
 evidence/                 accepted timing reports and verification summary
 docs/images/              architecture, tile, schedule and pipeline SVG diagrams
+tpu_v2/                   second iteration: word-wide memory schedule, phase
+                          counters, own regression (see tpu_v2/README.md)
 MANIFEST.json             packaged-file checksums
 verify_package.py         standard-library checksum checker
 ```
